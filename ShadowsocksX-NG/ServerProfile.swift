@@ -2,8 +2,11 @@
 //  ServerProfile.swift
 //  ShadowsocksX-NG
 //
-//  Created by 邱宇舟 on 16/6/6.
+//  Created by 邱宇舟 on 16/6/6.  Modified by aber on 16/10/18
 //  Copyright © 2016年 qiuyuzhou. All rights reserved.
+//  
+//  todo: add a new property "latency" which is used to record
+//        proxy server's last latency
 //
 
 import Cocoa
@@ -19,6 +22,7 @@ class ServerProfile: NSObject {
     var password:String = ""
     var remark:String = ""
     var ota: Bool = false // onetime authentication
+    var latency: Int? // may not test. todo
     
     override init() {
         uuid = UUID().uuidString
@@ -41,6 +45,7 @@ class ServerProfile: NSObject {
             if let ota = data["OTA"] {
                 profile.ota = ota as! Bool
             }
+            profile.latency = data["Latency"] as? Int
         }
         
         if let id = data["Id"] as? String {
@@ -63,6 +68,7 @@ class ServerProfile: NSObject {
         d["Password"] = password as AnyObject?
         d["Remark"] = remark as AnyObject?
         d["OTA"] = ota as AnyObject?
+        d["Latency"] = latency as AnyObject?
         return d
     }
     

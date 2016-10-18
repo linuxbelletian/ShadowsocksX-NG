@@ -398,6 +398,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
                     serverMenuText = "\(serverMenuText) - \(profileName)"
                 }
             }
+        }else {
+            let mgr = ServerProfileManager.instance
+            for p in mgr.profiles {
+                if mgr.activeProfileId == p.uuid {
+                    if !p.remark.isEmpty {
+                        serverMenuText = p.remark
+                    } else {
+                        serverMenuText = p.serverHost
+                    }
+                    if let latency = p.latency{
+                        serverMenuText += " - \(latency)ms"
+                    }
+                }
+            }
         }
         serversMenuItem.title = serverMenuText
         
